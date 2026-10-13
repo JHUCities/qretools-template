@@ -9,8 +9,9 @@ What QREtools is and how it works: [About QREtools](https://github.com/JHUCities
 This repository is the template for new workspaces:
 <https://github.com/JHUCities/qretools-template>. Start one with
 [Use this template](https://github.com/JHUCities/qretools-template/generate).
-It holds one bank of example questions and no instrument: QREtools writes an example
-instrument for you (New, Example instrument).
+It holds one bank of example questions, `banks/example`, and no instrument: when you
+start your first instrument (New → Instrument…), QREtools offers to open an example
+beside it, asking these questions.
 
 ## Set up a new workspace from this template
 
@@ -26,7 +27,7 @@ instrument for you (New, Example instrument).
    branch (`qretools-<login>`); the workspace changes only when a pull request is merged.
 4. **Tidy merged branches:** Settings → General → Pull Requests → "Automatically delete
    head branches".
-5. **Set your agency:** in `workspace.yaml` and `banks/local/bank.yaml`, replace
+5. **Set your agency:** in `workspace.yaml` and `banks/example/bank.yaml`, replace
    `org.example` with the DDI agency your items are published under (letters, digits and
    hyphens, in parts joined by dots, such as `edu.example.survey-lab`). Without one,
    nothing can be exported as DDI.
@@ -40,7 +41,7 @@ instrument for you (New, Example instrument).
 |---|---|
 | `workspace.yaml` | what the workspace says about itself: the DDI agency its instruments are published under (`agency:`) |
 | `instruments/<name>.yaml` | one instrument each (none yet: QREtools makes the first) |
-| `banks/local/` | the workspace's question bank, laid out as below; rename it, or add more banks beside it |
+| `banks/example/` | the example question bank, laid out as below. QREtools' example instrument asks its questions, and is offered only while this bank is here under this name with these questions: add your own bank beside it (New → Bank…), and delete this one when you no longer want the example |
 
 A bank's own layout:
 
@@ -69,7 +70,7 @@ Six things can be written once and named from any question:
 | a concept (what is measured) | `concept: service_satisfaction` | `concepts/service_satisfaction.yaml` and three more |
 | a unit | `number: { unit: days }` | `units/days.yaml`, `years.yaml`, `dollars.yaml` |
 | a response scale | `responses: satisfied5` | `scales/satisfied5.yaml`, `support4.yaml`, `support4_reversed.yaml` |
-| a universe | `universe: all_respondents` | `universes/all_respondents.yaml` |
+| a universe | `universe: all_respondents` | `universes/all_respondents.yaml`, `household_members.yaml` |
 | an instruction | `instruction: select_one` | `instructions/select_one.yaml`, `select_all.yaml` |
 | the missing-value codes | every question, implicitly | `missing.yaml` |
 
@@ -94,7 +95,7 @@ variant_of:
 
 ## The example questions
 
-`banks/local/questions/` holds one of each kind of question, to copy or delete:
+`banks/example/questions/` holds one of each kind of question, to copy:
 
 | Example | Shows |
 |---|---|
@@ -102,7 +103,8 @@ variant_of:
 | `examples/service_satisfaction.yaml` | one answer from a shared scale, with a shared universe and instruction |
 | `examples/news_sources.yaml` | select all that apply, one variable per option (coded on `yesno01`) |
 | `examples/library_visits.yaml` | a number with a range and a unit |
-| `examples/service_comments.yaml` | an open answer with a length limit |
+| `examples/service_comments.yaml` | an open answer with a length limit, its text filled in from an earlier answer (`fills:`) |
+| `examples/household_size.yaml`, `member_age.yaml` | a count, and a question asked once for each person counted |
 | `examples/parks_spending.yaml`, `parks_spending_reversed.yaml` | two questions alike on purpose (`variant_of`), on scales in opposite orders |
 
 Name questions and folders however your team prefers: QREtools reads nothing into
@@ -110,10 +112,12 @@ either.
 
 ## Instruments
 
-In QREtools, New → Example instrument writes `instruments/example.yaml`, asking these
-questions: consent and stopping on its answer, sections, a follow-up asked only of some
-respondents, a check on an answer, a value from outside the interview, and a
-split-ballot experiment on the two parks questions. Copy it or delete it.
+In QREtools, your first instrument offers "Open the example", which writes
+`instruments/example.yaml`, asking these questions: consent and stopping on its answer,
+sections, a computed value, a follow-up asked only of some respondents with its text
+filled from the label of an earlier answer, a check on an answer, a value from outside
+the interview, a split-ballot experiment on the two parks questions, and a roster asking
+each household member's age. Copy it or delete it.
 
 An instrument names each bank it uses under a short alias, then names the bank's
 questions with it (`ask: bank.consent`). A bank kept in this repository is named by
@@ -121,7 +125,7 @@ where it is from the instrument's own folder:
 
 ```yaml
 uses:
-  bank: ../banks/local
+  bank: ../banks/example
 ```
 
 A bank in a repository of its own is named by its repository and a tag, so the
