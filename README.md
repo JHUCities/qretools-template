@@ -119,11 +119,11 @@ the interview, a split-ballot experiment on the two parks questions, and a roste
 each household member's age. Copy it or delete it.
 
 An instrument names where its questions come from under a short alias, then names the
-questions with it (`ask: bank.consent`). Its own workspace is always written `../`:
+questions with it (`ask: example.consent`). Its own workspace is always written `../`:
 
 ```yaml
 uses:
-  bank: ../
+  example: ../
 ```
 
 Another workspace is named by its repository and a tag, so the instrument always reads
@@ -140,6 +140,6 @@ the agency they were published under. A private repository needs the QREtools ap
 installed for QREtools to read it. Its questions open on GitHub; your own open in place.
 
 Conditions are written in VTL, the SDMX standard's expression language:
-`bank.service_satisfaction in {"4", "5"}`, `form = "1"`, `bank.library_visits < 25`.
+`example.service_satisfaction in {"4", "5"}`, `form = "1"`, `example.library_visits < 25`.
 Codes are strings, so they are quoted. QREtools completes questions after `ask:`, names
 in conditions and codes after `=`, and lists what is still to fill in or fix as you type.
