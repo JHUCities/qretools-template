@@ -1,17 +1,17 @@
 # A survey workspace for QREtools
 
-Survey questions and their documentation, one YAML file per question, kept in a question
-bank, and the instruments composed from them, one YAML file each. QREtools elaborates
-both to DDI-Lifecycle 4.0.
+Survey questions and their documentation, one YAML file per question, and the
+instruments composed from them, one YAML file each. QREtools elaborates both to
+DDI-Lifecycle 4.0.
 
 What QREtools is and how it works: [About QREtools](https://github.com/JHUCities/qretools#readme).
 
 This repository is the template for new workspaces:
 <https://github.com/JHUCities/qretools-template>. Start one with
 [Use this template](https://github.com/JHUCities/qretools-template/generate).
-It holds one bank of example questions, `banks/example`, and no instrument: when you
-start your first instrument (New → Instrument…), QREtools offers to open an example
-beside it, asking these questions.
+It holds example questions, in `questions/example`, and no instrument: when you start
+your first instrument (New → Instrument…), QREtools offers to open an example beside
+it, asking these questions.
 
 ## Set up a new workspace from this template
 
@@ -27,8 +27,8 @@ beside it, asking these questions.
    branch (`qretools-<login>`); the workspace changes only when a pull request is merged.
 4. **Tidy merged branches:** Settings → General → Pull Requests → "Automatically delete
    head branches".
-5. **Set your agency:** in `workspace.yaml` and `banks/example/bank.yaml`, replace
-   `org.example` with the DDI agency your items are published under (letters, digits and
+5. **Set your agency:** in `workspace.yaml` (the gear beside the workspace's name in
+   QREtools), replace `org.example` with the DDI agency your items are published under (letters, digits and
    hyphens, in parts joined by dots, such as `edu.example.survey-lab`). Without one,
    nothing can be exported as DDI.
 6. **Open it** in QREtools: sign in and enter the repository as `owner/name`. The
@@ -39,29 +39,28 @@ beside it, asking these questions.
 
 | Path | Holds |
 |---|---|
-| `workspace.yaml` | what the workspace says about itself: the DDI agency its instruments are published under (`agency:`) |
-| `instruments/<name>.yaml` | one instrument each (none yet: QREtools makes the first) |
-| `banks/example/` | the example question bank, laid out as below. QREtools' example instrument asks its questions, and is offered only while this bank is here under this name with these questions: add your own bank beside it (New → Bank…), and delete this one when you no longer want the example |
-
-A bank's own layout:
-
-| Path | Holds |
-|---|---|
+| `workspace.yaml` | the workspace's settings: the DDI agency everything in it is published under (`agency:`), the fields every question must have (`required:`), and more for one folder's questions (`required_in:`) |
 | `questions/<folder>/<name>.yaml` | one question each; the folder is chosen when a question is first saved, and says nothing about the question's name |
 | `concepts/<name>.yaml` | shared concepts (`label:`, `definition:`), used by name from `concept:` |
 | `units/<name>.yaml` | shared units (`label:`, `definition:`), used by name from `unit:` under `number:` |
 | `scales/<name>.yaml` | shared response scales (`labels:`), used by name from `responses:` |
 | `universes/<name>.yaml` | shared universes (`text:`), used by name from `universe:` |
 | `instructions/<name>.yaml` | shared instructions (`text:`), used by name from `instruction:` |
-| `missing.yaml` | the bank's missing-value codes (`labels:`) |
-| `bank.yaml` | what the bank says about itself: the DDI agency its items are published under (`agency:`) |
+| `missing.yaml` | the missing-value codes (`labels:`) |
+| `select_all.yaml` | the two values a select-all-that-apply option is stored as (`chosen:`, `not_chosen:`); not here, so they are 1 Yes and 0 No |
+| `instruments/<name>.yaml` | one instrument each (none yet: QREtools makes the first) |
 
-`scales/yesno01.yaml` must stay as it is (`0: No`, `1: Yes`): select-all-that-apply
-questions record each option on it. The codes in `missing.yaml` are this template's
-example; use your own conventions. Instruments and banks are kept apart: never put an
-instrument inside a bank's folders.
+Question names, and the names of shared files of one kind, are each used once in the
+workspace, whatever folder a question is in. The codes in `missing.yaml` are this
+template's example; use your own conventions.
 
-## Shared values, and keeping the bank free of duplicates
+`questions/example/` is the one folder whose name QREtools reads: its example
+instrument asks these questions, and is offered only while they are saved there. Put
+your own questions in folders of your own, and delete this one when you no longer want
+the example. Its shared files (a scale, the universes, the units) stay, as they are
+yours to use.
+
+## Shared values, and keeping the workspace free of duplicates
 
 Six things can be written once and named from any question:
 
@@ -95,17 +94,17 @@ variant_of:
 
 ## The example questions
 
-`banks/example/questions/` holds one of each kind of question, to copy:
+`questions/example/` holds one of each kind of question, to copy:
 
 | Example | Shows |
 |---|---|
-| `interview/consent.yaml` | one answer from an inline list, with a shared instruction |
-| `examples/service_satisfaction.yaml` | one answer from a shared scale, with a shared universe and instruction |
-| `examples/news_sources.yaml` | select all that apply, one variable per option (coded on `yesno01`) |
-| `examples/library_visits.yaml` | a number with a range and a unit |
-| `examples/service_comments.yaml` | an open answer with a length limit, its text filled in from an earlier answer (`fills:`) |
-| `examples/household_size.yaml`, `member_age.yaml` | a count, and a question asked once for each person counted |
-| `examples/parks_spending.yaml`, `parks_spending_reversed.yaml` | two questions alike on purpose (`variant_of`), on scales in opposite orders |
+| `consent.yaml` | one answer from an inline list, with a shared instruction |
+| `service_satisfaction.yaml` | one answer from a shared scale, with a shared universe and instruction |
+| `news_sources.yaml` | select all that apply, one variable per option |
+| `library_visits.yaml` | a number with a range and a unit |
+| `service_comments.yaml` | an open answer with a length limit, its text filled in from an earlier answer (`fills:`) |
+| `household_size.yaml`, `member_age.yaml` | a count, and a question asked once for each person counted |
+| `parks_spending.yaml`, `parks_spending_reversed.yaml` | two questions alike on purpose (`variant_of`), on scales in opposite orders |
 
 Name questions and folders however your team prefers: QREtools reads nothing into
 either.
@@ -119,29 +118,28 @@ filled from the label of an earlier answer, a check on an answer, a value from o
 the interview, a split-ballot experiment on the two parks questions, and a roster asking
 each household member's age. Copy it or delete it.
 
-An instrument names each bank it uses under a short alias, then names the bank's
-questions with it (`ask: bank.consent`). A bank kept in this repository is named by
-where it is from the instrument's own folder:
+An instrument names where its questions come from under a short alias, then names the
+questions with it (`ask: example.consent`). Its own workspace is always written `../`:
 
 ```yaml
 uses:
-  bank: ../banks/example
+  example: ../
 ```
 
-A bank in a repository of its own is named by its repository and a tag, so the
-instrument always reads the same version of it until you change the tag:
+Another workspace is named by its repository and a tag, so the instrument always reads
+the same version of it until you change the tag:
 
 ```yaml
 uses:
-  theirs: your-org/their-bank@v1            # owner/name@tag
-  shared: your-org/workspace/banks/main@v2  # owner/name/folder@tag, for a bank in a folder
+  theirs: your-org/their-questions@v1  # owner/name@tag
 ```
 
-Only a tag is read, never a branch, so the bank's owners decide what version is
-published: they tag it. A private bank's repository needs the QREtools app installed
-for QREtools to read it. Its questions open on GitHub; a bank kept here opens in place.
+Only a tag is read, never a branch, so that workspace's owners decide what version is
+published: they tag it. It is read with its own `workspace.yaml`, so its questions keep
+the agency they were published under. A private repository needs the QREtools app
+installed for QREtools to read it. Its questions open on GitHub; your own open in place.
 
 Conditions are written in VTL, the SDMX standard's expression language:
-`bank.service_satisfaction in {"4", "5"}`, `form = "1"`, `bank.library_visits < 25`.
+`example.service_satisfaction in {"4", "5"}`, `form = "1"`, `example.library_visits < 25`.
 Codes are strings, so they are quoted. QREtools completes questions after `ask:`, names
 in conditions and codes after `=`, and lists what is still to fill in or fix as you type.
