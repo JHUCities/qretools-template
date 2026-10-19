@@ -43,6 +43,10 @@ fill in or fix, as QREtools shows it, and `qretools export . -o ddi.json` for th
 Without mise: `npx qretools@<the version in mise.toml> check .`. Change the version there
 to upgrade.
 
+`.github/workflows/check.yml` runs the same check on every pull request and push to `main`:
+it fails on anything to fill in or fix, and annotates each error and warning on its line
+in the pull request. To also fail on warnings, make its last line `qretools check . --strict`.
+
 ## Layout
 
 | Path | Holds |
