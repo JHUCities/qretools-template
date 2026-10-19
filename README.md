@@ -31,7 +31,7 @@ it, asking these questions.
    QREtools), replace `org.example` with the DDI agency your items are published under (letters, digits and
    hyphens, in parts joined by dots, such as `edu.example.survey-lab`). Without one,
    nothing can be exported as DDI.
-6. **Open it** in QREtools: sign in and enter the repository as `owner/name`. The
+6. **Open it** in QREtools: sign in at <https://qretools.com> and enter the repository as `owner/name`. The
    version that opens workspaces and instruments is in development and not published
    yet.
 
