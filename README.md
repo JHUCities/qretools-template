@@ -35,10 +35,19 @@ it, asking these questions.
    version that opens workspaces and instruments is in development and not published
    yet.
 
+## From a terminal
+
+`mise.toml` pins Node and the QREtools CLI (`qretools`, from npm). With
+[mise](https://mise.jdx.dev): `mise install`, then `qretools check .` to list what's to
+fill in or fix, as QREtools shows it, and `qretools export . -o ddi.json` for the DDI.
+Without mise: `npx qretools@<the version in mise.toml> check .`. Change the version there
+to upgrade.
+
 ## Layout
 
 | Path | Holds |
 |---|---|
+| `mise.toml` | the pinned tools: Node and the `qretools` CLI (see "From a terminal") |
 | `workspace.yaml` | the workspace's settings: the DDI agency everything in it is published under (`agency:`), the fields every question must have (`required:`), and more for one folder's questions (`required_in:`) |
 | `questions/<folder>/<name>.yaml` | one question each; the folder is chosen when a question is first saved, and says nothing about the question's name |
 | `concepts/<name>.yaml` | shared concepts (`label:`, `definition:`), used by name from `concept:` |
