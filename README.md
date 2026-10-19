@@ -37,7 +37,7 @@ it, asking these questions.
 
 ## From a terminal
 
-`mise.toml` pins Node and the QREtools CLI (`qretools`, from npm). With
+`mise.toml` pins Node and QREtools' npm package, `qretools`, whose command checks a workspace. With
 [mise](https://mise.jdx.dev): `mise install`, then `qretools check .` to list what's to
 fill in or fix, as QREtools shows it, and `qretools export . -o ddi.json` for the DDI.
 Without mise: `npx qretools@<the version in mise.toml> check .`. Change the version there
