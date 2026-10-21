@@ -43,7 +43,8 @@ fill in or fix, as QREtools shows it, and `qretools export . -o ddi.json` for th
 Without mise: `npx qretools@<the version in mise.toml> check .`. Change the version there
 to upgrade.
 
-`.github/workflows/check.yml` runs the same check on every pull request and push to `main`:
+`.github/workflows/check.yml` runs the same check on every pull request and push to `main`
+(`release.yml`, the Release workflow, is under "Releasing this workspace"):
 it fails on anything to fill in or fix, and annotates each error and warning on its line
 in the pull request. To also fail on warnings, make its last line `qretools check . --strict`.
 
@@ -51,7 +52,7 @@ in the pull request. To also fail on warnings, make its last line `qretools chec
 
 | Path | Holds |
 |---|---|
-| `mise.toml` | the pinned tools: Node and the `qretools` CLI (see "From a terminal") |
+| `mise.toml` | the pinned tools: Node and QREtools' npm package, `qretools` (see "From a terminal") |
 | `workspace.yaml` | the workspace's settings: the DDI agency everything in it is published under (`agency:`), the fields every question must have (`required:`), more for one folder's questions (`required_in:`), and the commit each tag its instruments use is locked at (`locked:`) |
 | `questions/<folder>/<name>.yaml` | one question each; the folder is chosen when a question is first saved, and says nothing about the question's name |
 | `concepts/<name>.yaml` | shared concepts (`label:`, `definition:`), used by name from `concept:` |
@@ -148,9 +149,17 @@ uses:
 ```
 
 Only a tag is read, never a branch, so that workspace's owners decide what version is
-published: they tag it. It is read with its own `workspace.yaml`, so its questions keep
-the agency they were published under. A private repository needs the QREtools app
-installed for QREtools to read it. Its questions open on GitHub; your own open in place.
+published: they release it with its Release workflow (below). It is read with its own
+`workspace.yaml`, so its questions keep the agency they were published under. A private
+repository needs the QREtools app installed for QREtools to read it. Its questions open
+on GitHub; your own open in place.
+
+There are two version numbers. The tag (`v1`, `v2`) is the other workspace's version,
+chosen by whoever releases it, and your instrument reads that workspace as it was at that
+tag. Each question's DDI version (the `2` in `urn:ddi:their.agency:a_question:2`) counts the
+changes to that question merged into the other workspace's `main`, so between two tags it
+can go up by more than one. A tag made by hand, without the Release workflow, carries no
+versions, so its questions read as version 1.
 
 A tag can be moved to another commit, so your workspace locks each tag its instruments
 read to the commit it named, under `locked:` in `workspace.yaml`. Saving an instrument
@@ -158,8 +167,21 @@ writes those lines; you don't edit them. If a tag later names another commit, th
 instrument shows a warning, and the next save locks it at the new commit with
 `[WARNING]` in the commit message, so whoever reviews the pull request sees that the
 questions under that tag may have changed. From the terminal, `qretools instrument
-export` writes the lock and prints the warning; say so in your commit message. It relies on git alone, so it works wherever
-your repositories are kept.
+export` writes the lock and prints the warning; copy the `[WARNING]` line into your
+commit message. An instrument that reaches `main` without its lock (written in a text
+editor and pushed, say) gets an `unlocked-tag` warning from `qretools check`; saving it in
+QREtools writes the lock. It relies on git alone, so it works wherever your repositories
+are kept.
+
+### Releasing this workspace
+
+Other workspaces read this one at a release tag. Make one with the Release workflow
+(`.github/workflows/release.yml`): on GitHub, Actions, then Release, then "Run workflow",
+with the next tag (`v1`, then `v2`, and so on). It tags `main`'s last commit, and the
+tag's message lists each question's DDI version, so instruments reading the tag get them.
+Never make, move or delete a tag by hand. The workflow pushes the tag with its own token,
+so the repository (or its organization) must let workflows write: Settings → Actions →
+General → Workflow permissions, "Read and write permissions".
 
 Conditions are written in VTL, the SDMX standard's expression language:
 `example.service_satisfaction in {"4", "5"}`, `form = "1"`, `example.library_visits < 25`.
