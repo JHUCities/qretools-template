@@ -52,7 +52,7 @@ in the pull request. To also fail on warnings, make its last line `qretools chec
 | Path | Holds |
 |---|---|
 | `mise.toml` | the pinned tools: Node and the `qretools` CLI (see "From a terminal") |
-| `workspace.yaml` | the workspace's settings: the DDI agency everything in it is published under (`agency:`), the fields every question must have (`required:`), and more for one folder's questions (`required_in:`) |
+| `workspace.yaml` | the workspace's settings: the DDI agency everything in it is published under (`agency:`), the fields every question must have (`required:`), more for one folder's questions (`required_in:`), and the commit each tag its instruments use is locked at (`locked:`) |
 | `questions/<folder>/<name>.yaml` | one question each; the folder is chosen when a question is first saved, and says nothing about the question's name |
 | `concepts/<name>.yaml` | shared concepts (`label:`, `definition:`), used by name from `concept:` |
 | `units/<name>.yaml` | shared units (`label:`, `definition:`), used by name from `unit:` under `number:` |
@@ -151,6 +151,15 @@ Only a tag is read, never a branch, so that workspace's owners decide what versi
 published: they tag it. It is read with its own `workspace.yaml`, so its questions keep
 the agency they were published under. A private repository needs the QREtools app
 installed for QREtools to read it. Its questions open on GitHub; your own open in place.
+
+A tag can be moved to another commit, so your workspace locks each tag its instruments
+read to the commit it named, under `locked:` in `workspace.yaml`. Saving an instrument
+writes those lines; you don't edit them. If a tag later names another commit, the
+instrument shows a warning, and the next save locks it at the new commit with
+`[WARNING]` in the commit message, so whoever reviews the pull request sees that the
+questions under that tag may have changed. From the terminal, `qretools instrument
+export` writes the lock and prints the warning; say so in your commit message. It relies on git alone, so it works wherever
+your repositories are kept.
 
 Conditions are written in VTL, the SDMX standard's expression language:
 `example.service_satisfaction in {"4", "5"}`, `form = "1"`, `example.library_visits < 25`.
