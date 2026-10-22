@@ -187,3 +187,9 @@ Conditions are written in VTL, the SDMX standard's expression language:
 `example.service_satisfaction in {"4", "5"}`, `form = "1"`, `example.library_visits < 25`.
 Codes are strings, so they are quoted. QREtools completes questions after `ask:`, names
 in conditions and codes after `=`, and lists what is still to fill in or fix as you type.
+
+## Licence
+
+This template is dedicated to the public domain under CC0 1.0 (`LICENSE`): copy it, change
+it and license your own bank however you choose, with no need to credit it. Replace this
+section with your bank's own licence once you've started from it.
