@@ -1,7 +1,7 @@
 name: news_sources
 title: Sources of local news
 text: Where do you get news about your community?
-intent: Describes which channels reach residents; an example of a select-all-that-apply question, recorded as one variable per option.
+intent: Describes which channels reach residents; an example of a select all that apply question, stored as one variable per option.
 concept: news_consumption
 universe: all_respondents
 instruction: select_all

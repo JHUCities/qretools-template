@@ -1,7 +1,7 @@
 name: household_size
 title: People in the household
 text: How many people live in your household, including you?
-intent: Counts household members, so each can be asked about in turn; an example of a number question an instrument repeats questions by.
+intent: Counts household members, so each can be asked about in turn; an example of a number an instrument can repeat questions by.
 universe: all_respondents
 number:
   min: 1
