@@ -1,43 +1,39 @@
-# This workspace's details, read with every question, shared file and
+# Settings for this workspace. They apply to every question, shared file and
 # instrument in it.
 
-# The DDI agency everything in this workspace is published under, its
-# questions, shared files and instruments alike: the registered code of the
-# organization that maintains it. Every URN they export begins with it, as in
-# urn:ddi:org.example:...
-# Replace org.example with your organization's code: letters, digits and
-# hyphens, in parts joined by dots, such as edu.example.dept.
-# The code is assigned by the DDI Alliance (RFC 9517). To register one: create an
+# Your DDI agency: the registered code of the organization that keeps this
+# workspace. Everything here is published under it, and every DDI URN starts
+# with it, as in urn:ddi:org.example:...
+# Replace org.example with your own code: letters, digits and hyphens, in parts
+# joined by dots, such as edu.example.dept.
+# Codes are given out by the DDI Alliance (RFC 9517). To get one, create an
 # account at https://registry.ddialliance.org, then Manage, then Request New
-# Agency, with an administrative and a technical contact; approval comes by
-# email. Its first part is a country code or another top-level domain, as in
-# us.example or edu.example. Once it's approved, add sub-agencies for teams or
+# Agency, with an administrative and a technical contact. Approval comes by
+# email. The first part is a country code or another top-level domain, as in
+# us.example or edu.example. Once approved, you can add codes for teams or
 # projects (edu.example.dept) under Manage, with no further approval.
 agency: org.example
 
-# Fields every question in this workspace must have, beyond name, text and
-# intent: any of title, concept, universe, instruction, source and note. A
-# question without one shows it as "to fill in", so adding one here marks every
-# question that lacks it. Remove the # at the start of these two lines to
-# require a title:
+# Fields every question must have, besides name, text and intent. Choose from
+# title, concept, universe, instruction, source and note. A question missing one
+# shows it as "to fill in". To require a title, remove the # at the start of
+# these two lines:
 #required:
 #  - title
 
-# Fields the questions in one folder must also have, by the folder's path. It
-# adds to the fields above and never removes one, so a topic can ask for more.
-# Remove the # at the start of these three lines to require a universe of the
-# questions in questions/example:
+# Extra fields the questions in one folder must have. These add to the list
+# above; they never remove from it. To require a universe for the questions in
+# questions/example, remove the # at the start of these three lines:
 #required_in:
 #  questions/example:
 #    - universe
 
-# The commit each tag this workspace's instruments use (owner/name@v1) named
-# when it was locked. A tag can be moved to another commit, but a commit can't
-# change, so a lock shows when another workspace's questions may have changed
-# under the same tag. Saving an instrument in QREtools, or exporting it with
-# `qretools instrument export`, writes these lines for the tags it reads: you
-# don't edit them. A tag that names a different commit from its lock is a
-# warning; the next save locks it at the new commit, and the change shows here,
-# in review, with a [WARNING] in the commit message. A tag with no lock here is
-# a warning in `qretools check`; saving the instrument writes it.
+# Locks: for each tag your instruments read (owner/name@v1), the commit it
+# pointed to. A tag can be moved but a commit can't change, so a lock shows when
+# another workspace's questions may have changed under the same tag.
+# QREtools writes these lines when you save an instrument, as does
+# `qretools instrument export`. Don't edit them. If a tag moves, you get a
+# warning; the next save locks the new commit, the change shows here in review,
+# and the commit message says [WARNING]. A tag with no lock is a warning in
+# `qretools check`; saving the instrument adds it.
 locked: {}
