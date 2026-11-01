@@ -4,3 +4,4 @@ text: Do you agree to take part in this survey?
 intent: Whether the respondent agrees to be interviewed, before anything else is asked
 responses: yesno
 instruction: select_one
+note: This question was part of a video tutorial
