@@ -3,6 +3,6 @@ title: Consent to the interview
 text: Do you agree to take part in this survey?
 intent: Whether the respondent agrees to be interviewed, before anything else is asked
 responses:
-  "1": Yes
-  "2": No
+  "1": yes
+  "2": no
 instruction: select_one
