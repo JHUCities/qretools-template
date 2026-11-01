@@ -32,8 +32,7 @@ these questions.
    in parts joined by dots, such as `edu.example.survey-lab`. Until you do, anything you
    export is published under `org.example`, which isn't yours.
 6. **Open it** in QREtools: sign in at <https://qretools.com> and enter the repository
-   as `owner/name`. The version that opens workspaces and instruments is still in
-   development and not published yet.
+   as `owner/name`.
 
 ## From a terminal
 
