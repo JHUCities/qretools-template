@@ -25,6 +25,9 @@ these questions.
    default branch; turn on "Require a pull request before merging", "Block force
    pushes" and "Restrict deletions". QREtools saves each person's work to their own
    branch (`qretools-<login>`). The workspace changes only when a pull request is merged.
+   Also turn on "Require status checks to pass" and add the check named `check`. Without
+   it, a pull request that would bring an instrument that isn't ready to release into
+   `main` can still be merged (see "Instruments").
 4. **Tidy merged branches:** Settings → General → Pull Requests → "Automatically delete
    head branches".
 5. **Set your agency:** in `workspace.yaml` (the gear beside the workspace's name in
@@ -134,15 +137,37 @@ When you start your first instrument, QREtools offers "Open the example". It wri
 - a split-ballot experiment on the two parks questions;
 - a roster asking each household member's age.
 
-Copy it or delete it.
+Copy it or delete it. It reads this workspace as `../`, so point it at a release tag
+before you merge it (below).
 
 An instrument gives each source of questions a short name, then asks questions through
-it (`ask: example.consent`). Its own workspace is always written `../`:
+it (`ask: example.consent`). While you write it on your branch, its own workspace is
+`../`, which reads the questions as they are now on your branch:
 
 ```yaml
 uses:
   example: ../
 ```
+
+Before it can be merged into `main`, it must read this workspace at a release tag, as it
+would any other workspace:
+
+```yaml
+uses:
+  example: your-org/this-workspace@v1
+```
+
+So questions are released before an instrument can use them:
+
+- A new workspace has no release yet, so release `v1` first (see "Releasing this
+  workspace").
+- To use questions you've just added, merge them and release them first. Then point the
+  instrument at the new tag, merge it, and release again. The instrument can't go in
+  the same pull request as its new questions, because they need a tag first.
+
+The check on every pull request refuses an instrument if it still reads `../`, if it
+reads a tag that hasn't been recorded or has moved, or if anything in it is left to fill
+in or fix.
 
 Another workspace is named by its repository and a tag. The instrument reads that
 workspace as it was at the tag, until you change the tag:
@@ -173,10 +198,10 @@ message, so whoever reviews the pull request knows the questions under that tag 
 changed.
 
 From a terminal, `qretools instrument export` records the commit and prints the warning;
-copy the `[WARNING]` line into your commit message. If an instrument reaches `main`
-without its lock (written in a text editor and pushed, say), `qretools check` gives an
-`unlocked-tag` warning. Saving it in QREtools writes the lock. All this uses git alone,
-so it works wherever your repositories are kept.
+copy the `[WARNING]` line into your commit message. An instrument whose tag isn't
+recorded (written in a text editor, say) can't be merged: the check on every pull
+request refuses it. Saving it in QREtools records the lock. All this uses git alone, so
+it works wherever your repositories are kept.
 
 ### Releasing this workspace
 
@@ -185,6 +210,10 @@ Other workspaces read this one at a release tag. To make one, use the Release wo
 with the next tag (`v1`, then `v2`, and so on). It tags the latest commit on `main`. The
 tag's message lists each question's DDI version, so instruments that read the tag get
 them. Never make, move or delete a tag by hand.
+
+A release includes this workspace's instruments. Each has one DDI version, which goes up
+whenever anything in it changes, including the tags it reads. As for questions, it can go
+up by more than one between releases.
 
 The workflow needs permission to push the tag. In the repository (or its organization):
 Settings → Actions → General → Workflow permissions, "Read and write permissions".
