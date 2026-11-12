@@ -51,7 +51,19 @@ these questions.
    QREtools), replace `org.example` with your DDI agency: letters, digits and hyphens,
    in parts joined by dots, such as `edu.example.survey-lab`. Until you do, anything you
    export is published under `org.example`, which isn't yours.
-7. **Open it** in QREtools: sign in at <https://qretools.com> and enter the repository
+7. **Publish the DDI:**
+
+   **Warning: the site is public, also for a private repository. Do not do this step if
+   your questions must stay private.**
+
+   1. Go to Settings → Pages.
+   2. Under "Build and deployment", set "Source" to "GitHub Actions".
+
+   After each merge to `main`, the DDI workflow (`.github/workflows/ddi.yml`) publishes
+   the DDI of `main` at `https://<owner>.github.io/<name>/ddi.json`. It also publishes
+   each release at `https://<owner>.github.io/<name>/<tag>/ddi.json`. To keep a release
+   off the site, write its tag on a line in `.github/pages-skip`.
+8. **Open it** in QREtools: sign in at <https://qretools.com> and enter the repository
    as `owner/name`.
 
 ## From a terminal
