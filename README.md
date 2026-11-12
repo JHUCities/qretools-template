@@ -246,8 +246,8 @@ Before the first release, give the Release workflow permission to push a tag:
 If you cannot select it, an owner of the organization must allow it.
 
 **Caution: do not make, move or delete a tag by hand. A tag that you make by hand has
-no DDI versions, so an instrument that reads it gives each question version 1. If you
-move or delete a tag, the instruments that read it do not agree with their locks.**
+no DDI versions. An instrument that reads it gives each question version 1. If you move
+or delete a tag, its instruments do not agree with their locks.**
 
 To make a release:
 
