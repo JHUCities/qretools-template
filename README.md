@@ -15,8 +15,9 @@ these questions.
 
 ## Set up a new workspace from this template
 
-1. **Create your workspace:** "Use this template" → "Create a new repository". A private
-   repository is fine.
+1. **Create your workspace:** "Use this template" → "Create a new repository". Steps 3
+   and 4 need a public repository, or a private repository on a paid GitHub plan. On the
+   free plan, GitHub does not allow rulesets in a private repository.
 2. **Install the QREtools app** on the new repository:
    <https://github.com/apps/qretools/installations/new> → choose your account or
    organisation → "Only select repositories" → this one. Without it you can read the
@@ -28,13 +29,29 @@ these questions.
    Also turn on "Require status checks to pass" and add the check named `check`. Without
    it, a pull request that would bring an instrument that isn't ready to release into
    `main` can still be merged (see "Instruments").
-4. **Tidy merged branches:** Settings → General → Pull Requests → "Automatically delete
+4. **Protect release tags:**
+   1. Go to Settings → Rules → Rulesets → New ruleset → New tag ruleset.
+   2. Type a ruleset name, for example "Protect release tags".
+   3. Set "Enforcement status" to "Active".
+   4. Click "Add target".
+   5. Click "Include by pattern".
+   6. Type `v*`.
+   7. Turn on "Restrict updates".
+   8. Turn on "Restrict deletions".
+   9. Turn on "Block force pushes".
+   10. Do not add an actor to the bypass list.
+   11. Click "Create".
+
+   With this ruleset, no person can move or delete a release tag. Because of this, an
+   instrument always reads the same questions at the same tag. The Release workflow
+   only creates tags, so the ruleset does not stop the Release workflow.
+5. **Tidy merged branches:** Settings → General → Pull Requests → "Automatically delete
    head branches".
-5. **Set your agency:** in `workspace.yaml` (the gear beside the workspace's name in
+6. **Set your agency:** in `workspace.yaml` (the gear beside the workspace's name in
    QREtools), replace `org.example` with your DDI agency: letters, digits and hyphens,
    in parts joined by dots, such as `edu.example.survey-lab`. Until you do, anything you
    export is published under `org.example`, which isn't yours.
-6. **Open it** in QREtools: sign in at <https://qretools.com> and enter the repository
+7. **Open it** in QREtools: sign in at <https://qretools.com> and enter the repository
    as `owner/name`.
 
 ## From a terminal
