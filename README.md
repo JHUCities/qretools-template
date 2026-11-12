@@ -234,18 +234,44 @@ it works wherever your repositories are kept.
 
 ### Releasing this workspace
 
-Other workspaces read this one at a release tag. To make one, use the Release workflow
-(`.github/workflows/release.yml`): on GitHub, Actions, then Release, then "Run workflow",
-with the next tag (`v1`, then `v2`, and so on). It tags the latest commit on `main`. The
-tag's message lists each question's DDI version, so instruments that read the tag get
-them. Never make, move or delete a tag by hand.
+Other workspaces read this workspace at a release tag. A release tag is `v1`, `v2` and
+so on.
 
-A release includes this workspace's instruments. Each has one DDI version, which goes up
-whenever anything in it changes, including the tags it reads. As for questions, it can go
-up by more than one between releases.
+Before the first release, give the Release workflow permission to push a tag:
 
-The workflow needs permission to push the tag. In the repository (or its organization):
-Settings → Actions → General → Workflow permissions, "Read and write permissions".
+1. In the repository, go to Settings → Actions → General.
+2. Under "Workflow permissions", select "Read and write permissions".
+3. Click "Save".
+
+If you cannot select it, an owner of the organization must allow it.
+
+**Caution: do not make, move or delete a tag by hand. A tag that you make by hand has
+no DDI versions, so an instrument that reads it gives each question version 1. If you
+move or delete a tag, the instruments that read it do not agree with their locks.**
+
+To make a release:
+
+1. On GitHub, go to Actions → Release.
+2. Click "Run workflow".
+3. Type the next tag, for example `v2`.
+4. Click the green "Run workflow" button.
+
+From a terminal, this `gh` command does the same:
+
+```sh
+gh workflow run release.yml -f tag=v2
+```
+
+The Release workflow puts the tag on the last commit on `main`. The message of the tag
+gives the DDI version of each file. An instrument that reads the tag gets these versions.
+
+If you did step 7 (Pages), the DDI workflow then publishes the release at
+`https://<owner>.github.io/<name>/<tag>/`. The files of a release stay at that address.
+
+A release includes the instruments of this workspace. Each instrument has one DDI
+version. The version increases when a part of the instrument changes. It also increases
+when a tag that the instrument reads changes. Between two releases, a version can
+increase by more than one.
 
 ### Conditions
 
