@@ -63,6 +63,10 @@ these questions.
    the DDI of `main` at `https://<owner>.github.io/<name>/ddi.json`. It also publishes
    each release at `https://<owner>.github.io/<name>/<tag>/ddi.json`. To keep a release
    off the site, write its tag on a line in `.github/pages-skip`.
+
+   The workflow also writes an index page at `https://<owner>.github.io/<name>/`. The index
+   page links the files of `main` and each release. The index page of a release is at
+   `https://<owner>.github.io/<name>/<tag>/`.
 8. **Open it** in QREtools: sign in at <https://qretools.com> and enter the repository
    as `owner/name`.
 
